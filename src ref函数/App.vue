@@ -5,38 +5,29 @@
   <h2>年龄{{age}}</h2>
   <h2>工作{{job.type}}</h2>
   <h2>薪资{{job.salary}}</h2>
-  <h2>爱好{{hobby}}</h2>
-  <h2>测试数据c的值{{job.a.b.c}}</h2>
   <button @click="changeInfo">点我更改信息</button>
 </template>
 <script>
-  import {ref,reactive} from 'vue'  //引入ref函数使得数据具有响应式
+  import {ref} from 'vue'  //引入ref函数使得数据具有响应式
 export default {
   name: 'App',
   setup(){
     let name = ref("张三") //使用ref函数让数据变成引用对象
     let age = ref(18)
-    const job = reactive({
+    const job = ref({
       type:'前端工程师',
-      salary:'10K',
-      a:{
-        b:{
-          c:'999'
-        }
-      }
+      salary:'10K'
     })
-    let hobby = reactive(['抽烟','喝酒','烫头'])
     function changeInfo() {
-      job.a.b.c = '666'  //能够深层监视到c的值并做出修改
-      hobby[0] = '学习'   
-      console.log(job)
+      job.value.type = '后端工程师'
+      job.value.salary = '20K'
+      console.log(job.value)
     }
     return {
       name,
       age,
       changeInfo,
-      job,
-      hobby
+      job
     }
   }
 }

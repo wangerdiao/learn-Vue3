@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let person = {
+            name: '刘凯',
+            age: '18'
+        }
+        // Vue2的响应式原理
+        // let p = {}
+        // Object.defineProperty(p,'name',{
+        //     get(){
+        //         console.log('有人读取name了')
+        //         return person.name
+        //     },
+        //     set(value) {
+        //         console.log('有人修改name了')
+        //         return person.name = value
+        //     }
+        // })
+
+        // const x1 = Reflect.defineProperty(person,'c',{
+        //     set() {
+        //         return 3
+        //     },
+        //     get() {
+        //         return 4
+        //     }
+        // })
+        // console.log(x1)  //Reflect.defineProperty具有返回值，true
+        // const x2 = Reflect.defineProperty(person,'c',{
+        //     set() {
+        //         return 5
+        //     },
+        //     get() {
+        //         return 6
+        //     }
+        // })
+        // console.log(x2)  //Reflect.defineProperty具有返回值，false
+        // Vue3的响应式原理
+        const p = new Proxy(person, {
+            get(target, propName) { //有人读取person的属性时调用
+                console.log(`有人读取p的${propName}属性了了`)
+                console.log(target, propName)
+                // return target[propName]
+                return Reflect.get(target, propName)
+            },
+            set(target, propName, value) { //有人修改或者增加person的属性时调用
+                console.log(`有人修改p的${propName}属性了了`)
+                // return target[propName] = value
+                return Reflect.set(target, propName, value)
+            },
+            deleteProperty(target, propName) { //有人删除person的属性时调用
+                console.log(`有人删除p的${propName}属性了了`)
+                // return delete target[propName]
+                return Reflect.deleteProperty(target, propName)
+            }
+        })
+    </script>
+</body>
+
+</html>
