@@ -1,19 +1,20 @@
 <template>
-  <!-- 模板里面会自动解析引用对象的value，即name.value -->
-  <button @click="isShow = !isShow">切换显示/隐藏</button>
-  <Demo v-if="isShow"> </Demo>
+  <div class="app">
+    <h1>我是App组件</h1>
+    <Child></Child>
+  </div>
 </template>
+
 <script>
-import Demo from './components/Demo.vue';  
-import {ref} from 'vue'
+import Child from "./components/Child";
 export default {
     name: "App",
-    components: { Demo },
-    setup() {
-      let isShow = ref(true)
-      return {
-      isShow
-    }
-    },   
+    components: { Child },
 }
 </script>
+<style>
+  .app {
+    background-color: red;
+    padding: 10px;
+  }
+</style>
